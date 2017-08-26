@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>getImageTiles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+    <!-- leaflet image -->
+    <script src='libs/leaflet-image.js'></script>
+    <!-- p5 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/p5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/addons/p5.dom.js"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    #images {
+        width: 600px;
+        height: 400px;
+        position: relative;
+    }
+
+    #mymap {
+        width: 100%;
+        height: 580px;
+        margin: none;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    canvas {
+        vertical-align: top;
+    }
+
+    .instructions {
+        border: black solid 4px;
+        vertical-align: middle;
+    	padding-right: 0px !important;
+    	padding-left: 0px !important;
+    }
+
+
+
+    #instructions-1 {
+        background-color: #ffd54f;
+    }
+
+    #instructions-2 {
+        background-color: #4db6ac;
+    }
+    .col{
+
+    }
+
+    .vcenter {
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #instructions-3 {
+        background-color: #ff8a65;
+        cursor: pointer;
+    }
+
+    #generator{
+    	cursor: pointer;
+    	background-color: #4db6ac;
+    }
+
+    
+
+    #input-sel{
+    	background-color: #ff8a65;
+    	padding-left:30px;
+    	padding-bottom:30px;
+    	height:500px;
+    }
+
+    .emoji-input{
+    	width:100%;
+    	height: 50px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- map area -->
+            <div class="col-md-8">
+                <div class="col-md-12 instructions vcenter" id="instructions-1">
+                    <h2>↓ select map area ↓</h2>
+                </div>
+                <div class="col-md-12" id="mymap"></div>
+            </div>
+
+            <!--  -->
+            <div class="col-md-4"">
+
+            	<div class="col-md-12 instructions vcenter" id="instructions-3">
+                    <h2>set the color features</h2>
+                </div>
+                <div class="col-md-12" id="input-sel">
+
+                    <div class="row">
+						<h4>feature 1</h4>
+						<div class="col-md-6">
+							<p>emoji:</p> <input type="text" name="emoji-input1"  value="🏠">
+						</div>
+						<div class="col-md-6">
+							<p>rgb(r,g,b):</p><input type="text" name="rgb-input1" value="rgb(217, 208, 201)">
+						</div>
+                    	
+                    	
+                    </div>
+                    <div class="row">
+						<h4>feature 2</h4>
+                    	<div class="col-md-6">
+							<p>emoji:</p> <input type="text" name="emoji-input2" value="🌊">
+						</div>
+						<div class="col-md-6">
+							<p>rgb(r,g,b):</p><input type="text" name="rgb-input2" value="rgb(170, 211, 223)">
+						</div>
+                    </div>
+                    <div class="row">
+                    	<h4>feature 3</h4>
+                    	<div class="col-md-6">
+							<p>emoji:</p> <input type="text" name="emoji-input3" value="🌳">
+						</div>
+						<div class="col-md-6">
+							<p>rgb(r,g,b):</p><input type="text" name="rgb-input3" value="rgb(223, 252, 226)">
+						</div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12 instructions vcenter" id="generator">
+                    <h2>GENERATE</h2>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- sketch -->
+    <script type="text/javascript " src="js/sketch.js "></script>
+</body>
+
+</html>

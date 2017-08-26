@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>getImageTiles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <!-- p5 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/p5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/addons/p5.dom.js"></script>
+ 
+    <style type="text/css">
+   
+
+    canvas {
+        vertical-align: top;
+    }
+
+
+    </style>
+</head>
+
+<body>
+    
+    </div>
+    
+    <!-- sketch -->
+    <script type="text/javascript">
+
+        var img1;
+        var pointDensity = 10;
+
+        /****
+        @ main setup
+        ****/
+
+        // load up the image
+        function preload(){
+            // instead of a locally served image
+            // we pull one from a raster map tile set
+            img1 = loadImage(getTileURL(40.704553, -73.936519, 16));
+        }
+
+        // set up your canvas
+        function setup() {
+            createCanvas(800, 800);
+            // don't loop it 60x a second
+            noLoop();
+        }
+
+        // draw
+        function draw() {
+            // load the image in the background
+            image(img1, 0, 0);
+
+            // call the make function
+            make(img1, img1.width, img1.height);
+        }
+
+
+        /****
+        @ the make function
+        ****/
+
+        // read in the image and 
+        function make(myImage, imageWidth, imageHeight) {
+            // load in the pixels from the image
+            myImage.loadPixels();
+            // run through each pixel of the image
+            for (var x = 0; x < imageWidth; x+=pointDensity) {
+              for (var y = 0; y < imageHeight; y+=pointDensity ) {
+                // Calculate the 1D location from a 2D grid
+                // 4 because you get rgba
+                var loc = (x + y * imageHeight)* 4;
+                // Get the R,G,B values from image
+                var r,g,b;
+                r = myImage.pixels[loc];
+                g = myImage.pixels[loc+1];
+                b = myImage.pixels[loc+2];
+
+                // check for these rgb pixel values and 
+                // assign the emoji to that x,y location
+
+                if (r === 200 && g === 250 && b === 204){
+                    push();
+                    translate(x, y);
+                    text('🦉', 0, 0);
+                    pop();
+                }
+
+                if (r === 217 && g === 208 && b === 201){
+                    push();
+                    translate(x, y);
+                    text('🐙', 0, 0);
+                    pop();
+                }
+                if (r === 255 && g === 255 && b === 255){
+                    push();
+                    translate(x, y);
+                    text('🐝', 0, 0);
+                    pop();
+                }
+             }
+            }
+        }
+
+        /****
+        @ helpers
+        ****/
+
+        /** Converts numeric degrees to radians */
+        if (typeof(Number.prototype.toRad) === "undefined") {
+          Number.prototype.toRad = function() {
+            return this * Math.PI / 180;
+          }
+        }
+
+        function getTileURL(lat, lon, zoom) {
+            // var latlng = L.latLng(lat, lon);
+            console.log(lat, lon, zoom)
+            var xtile = parseInt(Math.floor((lon + 180) / 360 * (1 << zoom)));
+            var ytile = parseInt(Math.floor((1 - Math.log(Math.tan(lat.toRad()) + 1 / Math.cos(lat.toRad())) / Math.PI) / 2 * (1 << zoom)));
+            
+            console.log(`https://a.tile.openstreetmap.org/${zoom}/${xtile}/${ytile}.png`);
+            // return { z: zoom, x: xtile, y: ytile };
+            return `https://a.tile.openstreetmap.org/${zoom}/${xtile}/${ytile}.png`
+        }
+
+        
+    </script>
+</body>
+
+</html>

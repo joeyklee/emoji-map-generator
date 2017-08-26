@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>getImageTiles</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+    <!-- leaflet image -->
+    <script src='libs/leaflet-image.js'></script>
+
+    <!-- p5 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/p5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.12/addons/p5.dom.js"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <style type="text/css">
+    #mymap {
+        width: 500px;
+        height: 500px;
+        margin: none;
+        position:absolute;
+        top:10px;
+        left:10px;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #generator{
+        background-color: #4db6ac;
+        position: absolute;
+        top:20px;
+        left:300px;
+        z-index: 1000 !important;
+        height:70px;
+        font-size: 24px;
+        color:white;
+    }
+
+    #defaultCanvas0{
+        position: absolute;
+        top:10px;
+        left:520px;
+    }
+    #placeholder{
+        position: absolute;
+        top:6px;
+        left:514px;
+        border: dotted 3px black;
+        width:506px;height:506px;
+    }
+    </style>
+</head>
+
+<body>
+    <button id="generator">click to generate</button>
+    <div id="mymap"></div>
+    <div id="placeholder"></div>
+    <!-- sketch -->
+    <script type="text/javascript">
+    var mymap;
+    var pointDensity = 10;
+    var myEmojiMap;
+
+    /****
+    @ main setup
+    ****/
+
+
+    // set up your canvas
+    function setup() {
+        createCanvas(500, 500);
+
+        // add the leaflet map object and tiles
+        mymap = L.map('mymap').setView([40.703271, -73.993723], 17);
+        mymap.scrollWheelZoom.disable();
+
+        var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(mymap);
+
+        // create a new EmojiMapFromTiles Object
+        myEmojiMap = new EmojiMapFromTiles(mymap);
+
+        // don't loop it 60x a second
+        noLoop();
+    }
+
+    // draw
+    function draw() {
+        // start the drawing out with a map
+        myEmojiMap.makeEmojiMap();
+    }
+
+    // when the generator button is clicked
+    $('#generator').on('click', function() {
+            myEmojiMap.makeEmojiMap();
+        })
+
+
+    /****
+    @ EmojiMapFromTiles Object
+    ****/
+
+
+    function EmojiMapFromTiles(_mapObj) {
+        var that = this;
+        that.mapObj = _mapObj;
+
+        /****
+        @ make
+        * get the tiles and call the make function
+        ****/
+        // get the tiles and call the make function
+        this.makeEmojiMap = function() {
+            leafletImage(that.mapObj, function(err, canvas) {
+                // once you get back the canvas of pixels
+                // read them into p5js with LoadImage
+                var dimensions = that.mapObj.getSize();
+
+                loadImage(canvas.toDataURL(), function(t) {
+                    // throw the results right on to the canvas
+                    that.make(t, dimensions.x, dimensions.y);
+                })
+            });
+        }
+
+        /****
+        @ make
+        * tweak below to change which emojis get mapped to the rgb
+        ****/
+        // make the image
+        this.make = function(myImage, imageWidth, imageHeight) {
+            // load in the pixels from the image
+            image(myImage, 0,0);
+            myImage.loadPixels();
+            // run through each pixel of the image
+            for (var x = 0; x < imageWidth; x += pointDensity) {
+                for (var y = 0; y < imageHeight; y += pointDensity) {
+                    // Calculate the 1D location from a 2D grid
+                    // 4 because you get rgba
+                    var loc = (x + y * imageHeight) * 4;
+                    // Get the R,G,B values from image
+                    var r, g, b;
+                    r = myImage.pixels[loc];
+                    g = myImage.pixels[loc + 1];
+                    b = myImage.pixels[loc + 2];
+
+                    // check for these rgb pixel values and 
+                    // assign the emoji to that x,y location
+
+                    if (r === 217 && g === 208 && b === 201) {
+                        push();
+                        translate(x, y);
+                        text('🏠', 0, 0);
+                        pop();
+                    }
+
+                    if (r === 170 && g === 211 && b === 223) {
+                        push();
+                        translate(x, y);
+                        text('🌊', 0, 0);
+                        pop();
+                    }
+                    if (r === 223 && g === 252 && b === 226) {
+                        push();
+                        translate(x, y);
+                        text('🌲', 0, 0);
+                        pop();
+                    }
+                }
+            }
+        }
+    } // END OF OBJECT
+    </script>
+</body>
+
+</html>
