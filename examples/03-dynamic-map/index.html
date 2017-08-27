@@ -64,6 +64,7 @@
     <div id="placeholder"></div>
     <!-- sketch -->
     <script type="text/javascript">
+    
     var mymap;
     var pointDensity = 10;
     var myEmojiMap;
@@ -137,7 +138,7 @@
         * tweak below to change which emojis get mapped to the rgb
         ****/
         // make the image
-        this.make = function(myImage, imageWidth, imageHeight) {
+        that.make = function(myImage, imageWidth, imageHeight) {
             // load in the pixels from the image
             image(myImage, 0,0);
             myImage.loadPixels();
