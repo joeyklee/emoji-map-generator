@@ -1,142 +1,148 @@
 var mymap;
-var img1;
-var pointDensity = 6;
-var img;
+var pointDensity = 10;
+var myEmojiMap;
 
-var emojiInput1, emojiInput2, emojiInput3,
-    rgbInput1, rgbInput2, rgbInput3;
 
+/****
+@ main setup
+****/
+// set up your canvas
 function setup() {
-  createCanvas(600, 400);
+    createCanvas(520, 520);
 
-  // $('body').append("<div id='mymap'></div>");
-  // $('body').append("<div id='images'></div>");
-  mymap = L.map('mymap').setView([51.505, -0.09], 16);
-  mymap.scrollWheelZoom.disable();
+    // add the leaflet map object and tiles
+    mymap = L.map('mymap').setView([40.703271, -73.993723], 17);
+    mymap.scrollWheelZoom.disable();
 
-  var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(mymap);
+    var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(mymap);
 
 
-  // console.log(mymap.getSize());
-  noLoop();
+
+    // create a new EmojiMapFromTiles Object
+    myEmojiMap = new EmojiMapFromTiles(mymap);
+
+    // don't loop it 60x a second
+    noLoop();
 }
 
-
-
-
-
+// draw
 function draw() {
-
-function getImageTiles() {
-  leafletImage(mymap, function(err, canvas) {
-      // now you have canvas
-      // example thing to do with that canvas:
-      img = document.createElement('img');
-      dimensions = mymap.getSize();
-      img.width = dimensions.x;
-      img.height = dimensions.y;
-      img.src = canvas.toDataURL();
-
-      // document.getElementById('images').innerHTML = '';
-      // document.getElementById('images').appendChild(img);
-
-      // img1 = loadImage(img.src);
-      // image(image1, 0, 0);
-
-      // var canvas = document.getElementById("defaultCanvas0");
-      // var ctx = canvas.getContext("2d");
-
-      // var image = new Image();
-      // image.onload = function() {
-      //     ctx.drawImage(image, 0, 0);
-
-      //  make(image, width, height);
-      // };
-
-      // image.src = img.src
-
-      loadImage(img.src, function(t) {
-          make(t, dimensions.x, dimensions.y);
-      })
-
-
-    });
-  }
-
-  $('#generator').on('click', function() {
-    getImageTiles();
-
-  })
-
+    $("#defaultCanvas0").appendTo("#emojimap")
+    // start the drawing out with a map
+    myEmojiMap.makeEmojiMap();
 }
 
-function make(myImage, imageWidth, imageHeight) {
-  emojiInput1 = $("input[type=text][name=emoji-input1]").val();
-  emojiInput2 = $("input[type=text][name=emoji-input2]").val();
-  emojiInput3 = $("input[type=text][name=emoji-input3]").val();
+// when the generator button is clicked
+$('#generator').on('click', function() {
+        myEmojiMap.makeEmojiMap();
+})
 
-  rgbInput1 = getRGB($("input[type=text][name=rgb-input1]").val());
-  rgbInput2 = getRGB($("input[type=text][name=rgb-input2]").val());
-  rgbInput3 = getRGB($("input[type=text][name=rgb-input3]").val());
-  
-  console.log(rgbInput1)
-  console.log(rgbInput2)
-  console.log(rgbInput3)
 
-  image(myImage, 0,0, imageWidth, imageHeight);
-  myImage.loadPixels();
-  for (var x = 0; x < imageWidth; x += pointDensity) {
-  for (var y = 0; y < imageHeight; y += pointDensity) {
-      // Calculate the 1D location from a 2D grid
-      var loc = (x + y * imageWidth) * 4;
-      // Get the R,G,B values from image
-      var r, g, b;
-      r = myImage.pixels[loc];
-      g = myImage.pixels[loc + 1];
-      b = myImage.pixels[loc + 2];
+/****
+@ EmojiMapFromTiles Object
+****/
+function EmojiMapFromTiles(_mapObj) {
+    var that = this;
+    that.mapObj = _mapObj;
 
-      
 
-      // feature 1
-      // rgb(224, 223, 223)
-      // rgb(217, 208, 201)
-      if (r === rgbInput1.r && g === rgbInput1.g && b === rgbInput1.b) {
-          push();
-          translate(x, y);
-          text(emojiInput1, 0, 0); 
-          pop();
-      }
+    /****
+    @ make
+    * get the tiles and call the make function
+    ****/
+    // get the tiles and call the make function
+    this.makeEmojiMap = function() {
+        leafletImage(that.mapObj, function(err, canvas) {
+            // once you get back the canvas of pixels
+            // read them into p5js with LoadImage
+            var dimensions = that.mapObj.getSize();
+            console.log(dimensions)
 
-      
-      // feature 2
-      // rgb(181, 208, 208)
-      if (r === rgbInput2.r && g === rgbInput2.g && b === rgbInput2.b) {
-          push();
-          translate(x, y);
-          text(emojiInput2, 0, 0);
-          pop();
-          }
-
-      
-      // feature 3
-      // rgb(116, 121, 121)
-      // rgb(223, 252, 226)
-      if (r === rgbInput3.r && g === rgbInput3.g && b === rgbInput3.b) {
-          push();
-          translate(x, y);
-          text(emojiInput3, 0, 0);
-          pop();
-      }
-
+            loadImage(canvas.toDataURL(), function(t) {
+                // get the text inputs
+                var params = that.getInputs();
+                // throw the results right on to the canvas
+                that.make(t, dimensions.x, dimensions.y, params);
+            })
+        });
     }
-  }
-}
 
-function getRGB(rgbstring){
-  var colorVals = rgbstring.split(/[(),]+/)
-  var output = {r:int(colorVals[1]), g:int(colorVals[2]), b:int(colorVals[3]) }
-  return output;
-}
+    /****
+    @ make
+    * get the tiles and call the make function
+    * uses params from the inptu
+    ****/
+
+    that.make = function(myImage, imageWidth, imageHeight, _params) {
+        // load in the pixels from the image
+        image(myImage, 0,0);
+        myImage.loadPixels();
+        // run through each pixel of the image
+        for (var x = 0; x < imageWidth; x += pointDensity) {
+            for (var y = 0; y < imageHeight; y += pointDensity) {
+                // Calculate the 1D location from a 2D grid
+                // 4 because you get rgba
+                var loc = (x + y * imageHeight) * 4;
+                // Get the R,G,B values from image
+                var r, g, b;
+                r = myImage.pixels[loc];
+                g = myImage.pixels[loc + 1];
+                b = myImage.pixels[loc + 2];
+
+                // check for these rgb pixel values and 
+                // assign the emoji to that x,y location
+                if (_params){
+                  for(var i = 0; i < Object.keys(_params.emojis).length-2; i++){
+                    var myColors = that.getRGB(_params.rgbs[i].value);
+                    if (r === myColors.r && g === myColors.g && b === myColors.b) {
+                        push();
+                        translate(x, y);
+                        text(_params.emojis[i].value, 0, 0);
+                        pop();
+                    }
+                  }
+                } else{
+                  if (r === 217 && g === 208 && b === 201) {
+                      push();
+                      translate(x, y);
+                      text('🏠', 0, 0);
+                      pop();
+                  }
+
+                  if (r === 170 && g === 211 && b === 223) {
+                      push();
+                      translate(x, y);
+                      text('🌊', 0, 0);
+                      pop();
+                  }
+                  if (r === 223 && g === 252 && b === 226) {
+                      push();
+                      translate(x, y);
+                      text('🌲', 0, 0);
+                      pop();
+                  }
+                }
+                
+            }
+        }
+    }
+
+    //  get the inputs from the text fields
+    that.getInputs = function(){
+      var eInputs = $("input[type=text].emoji-input");
+      var cInputs = $("input[type=text].color-input");
+      console.log({emojis: eInputs, rgbs: cInputs})
+      return {emojis: eInputs, rgbs: cInputs};
+    }
+
+    // convert rgb string to object
+    that.getRGB = function(rgbstring){
+      var colorVals = rgbstring.split(/[(),]+/)
+      var output = {r:int(colorVals[1]), g:int(colorVals[2]), b:int(colorVals[3]) }
+      return output;
+    }
+    
+} // END OF OBJECT
