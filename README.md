@@ -70,7 +70,10 @@ A color picker plugin will be useful for getting the color values from the image
 # Overview
 
 * A short introduction
-* 
+* Dive into the Examples
+* Fiddle with the Emoji App
+* Show Emoji mapping alternative
+* Independent work time
 
 # Short Introduction
 
