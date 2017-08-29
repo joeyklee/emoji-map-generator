@@ -1,5 +1,8 @@
+// declare the leaflet map object
 var mymap;
+// @MODIFY: CHANGE THE POINT DENSITY OF THE EMOJIS, HIGHER NUMBERS MEAN LESS EMOJIS
 var pointDensity = 10;
+// declare the emoji map object
 var myEmojiMap;
 
 
@@ -11,6 +14,7 @@ function setup() {
     createCanvas(520, 520);
 
     // add the leaflet map object and tiles
+    // @MODIFY: THE LAT/LON AND ZOOM HERE IF YOU'D LIKE
     mymap = L.map('mymap').setView([40.703271, -73.993723], 17);
     mymap.scrollWheelZoom.disable();
 
@@ -78,6 +82,7 @@ function EmojiMapFromTiles(_mapObj) {
 
     that.make = function(myImage, imageWidth, imageHeight, _params) {
         // load in the pixels from the image
+        // @MODIFY: IF YOU DON'T WANT AN IMAGE BELOW THE EMOJIS COMMENT THE IMAGE() FUNCTION
         image(myImage, 0,0);
         myImage.loadPixels();
         // run through each pixel of the image

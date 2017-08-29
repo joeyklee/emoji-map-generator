@@ -30,6 +30,7 @@
     <script type="text/javascript">
 
         var img1;
+        // @MODIFY: CHANGE THE POINT DENSITY OF THE EMOJIS, HIGHER NUMBERS MEAN LESS EMOJIS
         var pointDensity = 10;
 
         /****
@@ -40,6 +41,7 @@
         function preload(){
             // instead of a locally served image
             // we pull one from a raster map tile set
+            // @MODIFY: THE LAT/LON AND ZOOM HERE IF YOU'D LIKE
             img1 = loadImage(getTileURL(40.704553, -73.936519, 16));
         }
 
@@ -83,6 +85,7 @@
                 // check for these rgb pixel values and 
                 // assign the emoji to that x,y location
 
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 200 && g === 250 && b === 204){
                     push();
                     translate(x, y);
@@ -90,12 +93,15 @@
                     pop();
                 }
 
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 217 && g === 208 && b === 201){
                     push();
                     translate(x, y);
                     text('🐙', 0, 0);
                     pop();
                 }
+
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 255 && g === 255 && b === 255){
                     push();
                     translate(x, y);

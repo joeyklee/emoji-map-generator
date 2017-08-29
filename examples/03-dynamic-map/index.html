@@ -65,8 +65,11 @@
     <!-- sketch -->
     <script type="text/javascript">
     
+    // declare the leaflet map object
     var mymap;
+    // @MODIFY: CHANGE THE POINT DENSITY OF THE EMOJIS, HIGHER NUMBERS MEAN LESS EMOJIS
     var pointDensity = 10;
+    // declare the emoji map object
     var myEmojiMap;
 
     /****
@@ -79,6 +82,7 @@
         createCanvas(500, 500);
 
         // add the leaflet map object and tiles
+        // @MODIFY: THE LAT/LON AND ZOOM HERE IF YOU'D LIKE
         mymap = L.map('mymap').setView([40.703271, -73.993723], 17);
         mymap.scrollWheelZoom.disable();
 
@@ -140,6 +144,7 @@
         // make the image
         that.make = function(myImage, imageWidth, imageHeight) {
             // load in the pixels from the image
+            // @MODIFY: IF YOU DON'T WANT AN IMAGE BELOW THE EMOJIS COMMENT THE IMAGE() FUNCTION
             image(myImage, 0,0);
             myImage.loadPixels();
             // run through each pixel of the image
@@ -156,20 +161,21 @@
 
                     // check for these rgb pixel values and 
                     // assign the emoji to that x,y location
-
+                    // @MODIFY: THE RGB COLORS and the EMOJIS
                     if (r === 217 && g === 208 && b === 201) {
                         push();
                         translate(x, y);
                         text('🏠', 0, 0);
                         pop();
                     }
-
+                    // @MODIFY: THE RGB COLORS and the EMOJIS
                     if (r === 170 && g === 211 && b === 223) {
                         push();
                         translate(x, y);
                         text('🌊', 0, 0);
                         pop();
                     }
+                    // @MODIFY: THE RGB COLORS and the EMOJIS
                     if (r === 223 && g === 252 && b === 226) {
                         push();
                         translate(x, y);

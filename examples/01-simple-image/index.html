@@ -30,6 +30,7 @@
     <script type="text/javascript">
 
         var img1;
+        // @MODIFY: CHANGE THE POINT DENSITY OF THE EMOJIS, HIGHER NUMBERS MEAN LESS EMOJIS
         var pointDensity = 10;
 
         // load up the image
@@ -45,6 +46,7 @@
 
         function draw() {
             // load the image in the background
+            // @MODIFY: IF YOU DON'T WANT AN IMAGE BELOW THE EMOJIS COMMENT THE IMAGE() FUNCTION
             image(img1, 0, 0);
 
             // call the make function
@@ -69,19 +71,21 @@
 
                 // check for these rgb pixel values and 
                 // assign the emoji to that x,y location
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 242 && g === 239 && b === 233){
                     push();
                     translate(x, y);
                     text('🌳', 0, 0);
                     pop();
                 }
-
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 181 && g === 208 && b === 208){
                     push();
                     translate(x, y);
                     text('🌊', 0, 0);
                     pop();
                 }
+                // @MODIFY: THE RGB COLORS and the EMOJIS
                 if (r === 255 && g === 255 && b === 255){
                     push();
                     translate(x, y);
