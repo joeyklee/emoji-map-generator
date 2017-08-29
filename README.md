@@ -4,6 +4,8 @@
 
 ## Workshop 
 
+![](assets/img/sampler-800x800.png)
+
 Title: Let's Make Emoji Maps!
 With: Joey Lee (tw: @leejoeyk)
 
