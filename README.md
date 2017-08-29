@@ -22,7 +22,7 @@ This workshop will be a fun evening of tweaking code and creating emoji maps tha
 
 ## Materials
 
-If you're reading this, then you've found all the materials you need for the workshop!
+If you're reading this, then you've found all the materials you need for the workshop! The best way for learning is to download the repository so you can tweak the code and see what happens.
 
 ## A quick note on browsers
 
@@ -69,13 +69,8 @@ A color picker plugin will be useful for getting the color values from the image
 
 # Overview
 
-* a few slides maybe?
-* Two simple examples images
-* code overview
-* how-to
-* remix and reuse code
-* P5js
-* color tool plugin for the browser
+* A short introduction
+* 
 
 # Short Introduction
 
@@ -93,17 +88,23 @@ Taken further, you might then think about generating or supplying your own maps 
 
 We're going to go through the examples incrementally in the `examples/` directory to get a better idea about how leaflet.js and p5.js all fit together. Let's dive in 🏊‍♀️!
 
+You will notice comments in all of the examples. Where the comments is prefaced with: `@MODIFY` is where you should be looking to tweak and modify the code to see what happens. If you're more advanced, then feel free to get all up in there 
+
 ## [Example 1: 01-simple-image](examples/01-simple-image/)
 
-
+![](examples/01-simple-image/example-01-bg.png)
 
 This is a simple example that takes in a static image in a folder → reads it into p5's canvas object  → then says, "for the following pixel values, assign emoji A to rgb 1,2,3, then emoji B to rgb 2,3,4 and so on"
 
 ## [Example 2: 02-static-map](examples/02-static-map)
 
+![](examples/02-static-map/example-01.png)
+
 This is a simple example that takes in a static image tile based on the openstreetmap tile specified by a lat/lon/zoom → reads it into p5's canvas object  → then says, "for the following pixel values, assign emoji A to rgb 1,2,3, then emoji B to rgb 2,3,4 and so on"
 
 ## [Example 3: 03-dynamic-map](examples/03-dynamic-map)
+
+![](examples/03-dynamic-map/example-01.png)
 
 This is a simple example that takes in set of image tiles dynamically based on the openstreetmap tile specified by the viewport of the interactive map → reads it into p5's canvas object → then says, "for the following pixel values, assign emoji A to rgb 1,2,3, then emoji B to rgb 2,3,4 and so on" 
 
@@ -112,16 +113,49 @@ A new map can then be generated for different viewports. If you wish to change t
 
 ### The `EmojiMapFromTiles` Object
 
-This is a quick shout out to Object Oriented Programming (OOP) - it can be really cool. Here we create an object that contains the functionality of our emoji generating activities. 
+This is a quick shout out to Object Oriented Programming (OOP) - it can be really helpful to build more readable and organized code bits. Here we create an object called `EmojiMapFromTiles`  that contains the properties and functionality of our emoji generating activities. 
+
+Here's a summary of what's going on here:
+
+
+> // FIRST: we declare a variable to store our object
+
+```
+var myEmojiMap;
+```
+...
+
+
+> // SECOND: we create and new EmojiMapFromTiles object and store it into our myEmojiMap variable
+
+```
+var myEmojiMap = new EmojiMapFromTiles(mymap);
+```
+
+...
+
+> // THIRD: when the page loads, we call .makeEmojiMap() on our myEmojiMap object to create our emoji map
+
+```
+myEmojiMap.makeEmojiMap();
+``` 
+
+This is a really super duper quick and dirty explanation of what's going on, but hopefully when you remix the code, it will feel more clear.
+
  
 # Part 2: [App](app/)
+
 
 The app extends [Example 3: 03-dynamic-map](examples/03-dynamic-map) by creating an interface around it. You can now change the parameters using the simple and silly user interface provided.
 
 
 # Notes/Resources:
 
-* link to dan shiffmans coding train - channel
-* link to dan shiffmans coding train - pixel matching tutorial
-* p5.js community
-* leaflet.js
+* link to dan shiffmans coding train - channel: [https://www.youtube.com/user/shiffman](https://www.youtube.com/user/shiffman)
+* link to dan shiffmans coding train - pixel matching tutorial: [https://www.youtube.com/watch?v=bkGf4fEHKak&list=PLRqwX-V7Uu6aKKsDHZdDvN6oCJ2hRY_Ig](https://www.youtube.com/watch?v=bkGf4fEHKak&list=PLRqwX-V7Uu6aKKsDHZdDvN6oCJ2hRY_Ig)
+* p5.js + community: [https://p5js.org/](https://p5js.org/)
+* leaflet.js: [http://leafletjs.com/](http://leafletjs.com/)
+* leaflet-image library: [https://github.com/mapbox/leaflet-image](https://github.com/mapbox/leaflet-image)
+* leaflet-emoji: [https://github.com/nerik/Leaflet.Emoji](https://github.com/nerik/Leaflet.Emoji)
+	- [https://nerik.github.io/Leaflet.Emoji/#emoji_nyc](https://nerik.github.io/Leaflet.Emoji/#emoji_nyc)
+	- [https://nerik.github.io/Leaflet.Emoji-slides/#/1](https://nerik.github.io/Leaflet.Emoji-slides/#/1)
