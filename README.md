@@ -10,7 +10,7 @@ Title: Let's Make Emoji Maps!
 With: Joey Lee (tw: @leejoeyk)
 
 About: 
-Let's Make Emoji Maps! Emojis are an expressive (and fun) means of representing emotions and actions as well as physical features. There's plenty of great examples of people using emojis in maps like the Emoji Weather Maps (https://blog.darksky.net/emoji-maps/) or the Emoji Atlas (https://twitter.com/emojiatlas?lang=de), all of which use emojis as a way to symbolize various things in geography. In this workshop, we will use emoji mapping as a way to explore some new ways of representing space as well as some concepts around data processing (e.g. pixel matching!). 
+Let's Make Emoji Maps! Emojis are an expressive (and fun) means of representing emotions and actions as well as physical features. There's plenty of great examples of people using emojis in maps like the Emoji Weather Maps (https://blog.darksky.net/emoji-maps/), the Emoji Atlas (https://twitter.com/emojiatlas?lang=de) or the emoji maps by @nerik (https://nerik.github.io/Leaflet.Emoji/#emoji_nyc), all of which use emojis as a way to symbolize various things in geography. In this workshop, we will use emoji mapping as a way to explore some new ways of representing space as well as some concepts around data processing (e.g. pixel matching!). 
 
 This workshop will be a fun evening of tweaking code and creating emoji maps that mean something different for each of us. I'd ❤️ to 👀 you!
 
@@ -159,5 +159,6 @@ The app extends [Example 3: 03-dynamic-map](examples/03-dynamic-map) by creating
 * YOU SHOULD ALL CHECK THIS OUT: leaflet-emoji // library for mapping emojis to geojson interactively in leaflet: [https://github.com/nerik/Leaflet.Emoji](https://github.com/nerik/Leaflet.Emoji)
 	- [https://nerik.github.io/Leaflet.Emoji/#emoji_nyc](https://nerik.github.io/Leaflet.Emoji/#emoji_nyc)
 	- [https://nerik.github.io/Leaflet.Emoji-slides/#/1](https://nerik.github.io/Leaflet.Emoji-slides/#/1)
+	- [Everything you need to know about emoji](https://www.smashingmagazine.com/2016/11/character-sets-encoding-emoji/)
 * [Emoji Weather Maps](https://blog.darksky.net/emoji-maps/) 
 * [the Emoji Atlas](https://twitter.com/emojiatlas?lang=de)
