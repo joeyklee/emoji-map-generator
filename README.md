@@ -44,6 +44,8 @@ On mac:
 
 ```
 python -m SimpleHTTPServer
+
+# see: localhost:8000
 ```
 
 or any platform that can run Node.js, use the `http-server` npm module:
@@ -55,7 +57,7 @@ npm install http-server -g
 # run, user the --cors flag in case you get cross-origin issues
 http-server 
 
-# check http://127.0.0.1:8080 
+# see: http://127.0.0.1:8080 
 ```
 
 ## A color picker plugin 
@@ -92,6 +94,8 @@ Taken further, you might then think about generating or supplying your own maps 
 We're going to go through the examples incrementally in the `examples/` directory to get a better idea about how leaflet.js and p5.js all fit together. Let's dive in 🏊‍♀️!
 
 ## [Example 1: 01-simple-image](examples/01-simple-image/)
+
+
 
 This is a simple example that takes in a static image in a folder → reads it into p5's canvas object  → then says, "for the following pixel values, assign emoji A to rgb 1,2,3, then emoji B to rgb 2,3,4 and so on"
 
