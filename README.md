@@ -58,6 +58,10 @@ http-server
 # check http://127.0.0.1:8080 
 ```
 
+## A color picker plugin 
+
+A color picker plugin will be useful for getting the color values from the images you wish to process. I use [ColorZilla](http://www.colorzilla.com/) but there are a number out there for your browser of choice. 
+
 ***
 
 
